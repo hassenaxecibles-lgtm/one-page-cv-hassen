@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hassen Rajhi — Développeur Web Full Stack</title>
+<meta name="description" content="Portfolio de Hassen Rajhi, développeur web full stack et responsable contrôle qualité avec 17 ans d'expérience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!--
+  MODIFIER LA PAGE
+  - Chaque texte a ses deux versions côte à côte :
+      <p data-en="English text">Texte français</p>
+  - Vidéos : ajouter les liens dans la liste VIDEOS, en bas de ce fichier.
+  - Couleurs : modifier le bloc :root ci-dessous.
+-->
+
+<style>
+  :root {
+    /* Thème : changer ces valeurs recolore toute la page */
+    --bg: #0b0c1a;
+    --surface: #14162b;
+    --text: #f1f2fb;
+    --muted: #a5a9c9;
+    --violet: #8b5cf6;
+    --blue: #3b82f6;
+    --cyan: #22d3ee;
+    --pink: #ec4899;
+    --amber: #f59e0b;
+    --emerald: #10b981;
+    --gradient: linear-gradient(120deg, var(--violet), var(--blue) 55%, var(--cyan));
+    --line: rgba(255, 255, 255, .08);
+    --shadow: 0 18px 50px -20px rgba(0, 0, 0, .7);
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 1.0625rem/1.65 "DM Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: "Sora", system-ui, sans-serif; line-height: 1.15; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  img { display: block; max-width: 100%; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+
+  .sprite { display: none; }
+  .wrap { width: min(1140px, 100%); margin-inline: auto; padding-inline: 16px; }
+  @media (min-width: 640px) { .wrap { padding-inline: 28px; } }
+  section { padding-block: 64px; }
+  @media (min-width: 768px) { section { padding-block: 96px; } }
+
+  .gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .eyebrow {
+    color: var(--cyan);
+    font-weight: 700;
+    font-size: .8125rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 40px; }
+
+  /* En-tête */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(11, 12, 26, .72);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; gap: 12px; height: 68px; }
+  .logo { font: 800 1.15rem "Sora", sans-serif; margin-right: auto; }
+  .nav-links { display: none; gap: 24px; color: var(--muted); font-weight: 500; }
+  .nav-links a { transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .lang, .burger {
+    display: grid;
+    place-items: center;
+    height: 40px;
+    min-width: 44px;
+    padding: 0 10px;
+    color: var(--text);
+    font: 700 .85rem "DM Sans", sans-serif;
+    background: rgba(255, 255, 255, .06);
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .lang:hover, .burger:hover { background: rgba(255, 255, 255, .13); }
+  .lang:active, .burger:active { transform: scale(.94); }
+  .mobile-menu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .3s var(--ease);
+  }
+  .mobile-menu.open { grid-template-rows: 1fr; }
+  .mobile-menu > div { overflow: hidden; }
+  .mobile-menu.open > div { border-top: 1px solid var(--line); }
+  .mobile-menu a { display: block; padding: 13px 16px; font-weight: 500; }
+  .mobile-menu:not(.open) a { visibility: hidden; }
+  @media (min-width: 960px) {
+    .nav-links { display: flex; margin-right: 12px; }
+    .burger, .mobile-menu { display: none; }
+  }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding-block: 56px 72px; }
+  @media (min-width: 768px) { .hero { padding-block: 96px 104px; } }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: .5;
+    pointer-events: none;
+    animation: drift 16s ease-in-out infinite alternate;
+  }
+  .blob.a { width: 420px; height: 420px; top: -130px; left: -110px; background: var(--violet); }
+  .blob.b { width: 360px; height: 360px; top: 90px; right: -130px; background: var(--blue); animation-delay: -5s; }
+  .blob.c { width: 260px; height: 260px; bottom: -120px; left: 42%; background: var(--cyan); opacity: .28; animation-delay: -10s; }
+  @keyframes drift { to { transform: translate(50px, 36px) scale(1.14); } }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 180px;
+    background: linear-gradient(transparent, var(--bg));
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; z-index: 1; }
+  .hero-grid { display: grid; gap: 44px; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.35fr 1fr; gap: 56px; } }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 14px;
+    margin-bottom: 22px;
+    font-size: .9rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, .07);
+    border-radius: 99px;
+  }
+  .badge i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); animation: pulse 2s infinite; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, .6); }
+    100% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  }
+  .hero h1 { font-size: clamp(2.5rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -.02em; }
+  .hero h1 span { display: block; }
+  .hero .role { font: 600 clamp(1.05rem, 2.4vw, 1.3rem)/1.35 "Sora", sans-serif; margin-top: 16px; }
+  .hero .lead { color: var(--muted); font-size: clamp(1.02rem, 2.2vw, 1.15rem); max-width: 54ch; margin-top: 16px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    font-weight: 700;
+    border-radius: 12px;
+    transition: transform .2s var(--ease), box-shadow .2s, background .2s;
+  }
+  .btn:hover { transform: translateY(-3px); }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--gradient); color: #fff; box-shadow: 0 12px 30px -10px var(--violet); }
+  .btn.primary:hover { box-shadow: 0 16px 38px -8px var(--violet); }
+  .btn.ghost { background: rgba(255, 255, 255, .07); }
+  .btn.ghost:hover { background: rgba(255, 255, 255, .13); }
+
+  .portrait { position: relative; width: min(340px, 72vw); margin-inline: auto; }
+  @media (min-width: 900px) { .portrait { order: 2; } }
+  .portrait::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--violet), var(--blue), var(--cyan), var(--pink), var(--violet));
+    filter: blur(1px);
+    animation: spin 12s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .portrait img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid var(--bg);
+  }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; max-width: 540px; }
+  .stats b { display: block; font: 800 clamp(1.7rem, 5vw, 2.4rem) "Sora", sans-serif; }
+  .stats span { color: var(--muted); font-size: .9rem; line-height: 1.3; display: block; }
+
+  /* Cartes */
+  .card {
+    background: var(--surface);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    transition: transform .25s var(--ease), box-shadow .25s;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips li { padding: 4px 12px; font-size: .9rem; background: rgba(255, 255, 255, .07); border-radius: 99px; }
+
+  .about { display: grid; gap: 32px; }
+  @media (min-width: 860px) { .about { grid-template-columns: 1.2fr 1fr; gap: 56px; } }
+  .about .text { color: var(--muted); }
+  .about .text p + p { margin-top: 16px; }
+  .facts { display: grid; gap: 16px; }
+  .fact { padding: 20px 22px; }
+  .fact h3 { font-size: 1rem; margin-bottom: 10px; }
+  .fact li { color: var(--muted); font-size: .98rem; }
+  .fact li + li { margin-top: 8px; }
+  .fact li strong { color: var(--text); font-weight: 500; display: block; }
+
+  .skills { display: grid; gap: 16px; }
+  @media (min-width: 640px) { .skills { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .skills { grid-template-columns: repeat(3, 1fr); } }
+  .skill { padding: 20px 22px; }
+  .skill:hover { transform: translateY(-4px); box-shadow: var(--shadow), 0 0 0 1.5px rgba(139, 92, 246, .45); }
+  .skill h3 { font-size: 1rem; margin-bottom: 12px; }
+
+  .projects { display: grid; gap: 22px; }
+  @media (min-width: 680px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 980px) { .projects { grid-template-columns: repeat(3, 1fr); } }
+  .project { display: flex; flex-direction: column; overflow: hidden; }
+  .project:hover { transform: translateY(-7px) scale(1.012); box-shadow: var(--shadow), 0 0 0 1.5px var(--tone); }
+  .project:active { transform: scale(.985); }
+  .project.figma { --tone: var(--violet); --art: linear-gradient(135deg, var(--violet), var(--pink)); }
+  .project.symfony { --tone: var(--cyan); --art: linear-gradient(135deg, var(--blue), var(--cyan)); }
+  .project.presta { --tone: var(--amber); --art: linear-gradient(135deg, var(--amber), var(--pink)); }
+  .project .art { height: 130px; display: grid; place-items: center; background: var(--art); }
+  .project .art svg { width: 50px; height: 50px; color: #fff; transition: transform .35s var(--ease); }
+  .project:hover .art svg { transform: scale(1.18) rotate(-5deg); }
+  .project .body { display: flex; flex-direction: column; flex: 1; padding: 22px; }
+  .project h3 { font-size: 1.15rem; margin-bottom: 8px; }
+  .project p { color: var(--muted); font-size: 1rem; margin-bottom: 16px; }
+  .project .chips { margin-top: auto; }
+  .project .more { margin-top: 16px; font-weight: 700; color: var(--tone); }
+  .project .more span { display: inline-block; transition: transform .2s; }
+  .project:hover .more span:last-child { transform: translateX(5px); }
+
+  /* Vidéos */
+  .videos { display: grid; gap: 22px; }
+  @media (min-width: 680px) { .videos { grid-template-columns: repeat(2, 1fr); } }
+  .video { overflow: hidden; background: #fff; }
+  .video iframe { display: block; width: 100%; height: 540px; border: 0; }
+  .video video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+  .video.local { background: var(--surface); }
+  .video-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 24px;
+    text-align: center;
+    background: linear-gradient(130deg, rgba(139, 92, 246, .16), rgba(34, 211, 238, .1));
+  }
+  .video-empty .icon {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 18px;
+    color: #fff;
+    background: var(--gradient);
+    border-radius: 50%;
+    animation: pulse-violet 2.4s infinite;
+  }
+  @keyframes pulse-violet {
+    0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, .55); }
+    100% { box-shadow: 0 0 0 18px rgba(139, 92, 246, 0); }
+  }
+  .video-empty p { color: var(--muted); max-width: 48ch; }
+  .video-empty .actions { justify-content: center; margin-top: 20px; }
+  .video-more { margin-top: 24px; text-align: center; }
+  .video-more a { color: var(--cyan); font-weight: 700; }
+  [hidden] { display: none !important; }
+
+  /* Parcours */
+  .timeline { position: relative; display: grid; gap: 20px; padding-left: 26px; max-width: 880px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(var(--violet), var(--cyan));
+  }
+  .job { position: relative; padding: 22px 24px; }
+  .job::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 28px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gradient);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+  .job:hover { transform: translateX(5px); }
+  .job time { color: var(--cyan); font-size: .9rem; font-weight: 700; }
+  .job h3 { font-size: 1.15rem; margin-top: 4px; }
+  .job .title { font-weight: 500; margin: 2px 0 10px; }
+  .job ul { color: var(--muted); }
+  .job li { position: relative; padding-left: 16px; }
+  .job li + li { margin-top: 5px; }
+  .job li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .68em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--violet);
+  }
+
+  /* Contact */
+  .contact {
+    padding: 56px 20px;
+    text-align: center;
+    border-radius: 24px;
+    background: linear-gradient(130deg, #4c1d95, #1e3a8a 60%, #155e75);
+    box-shadow: var(--shadow);
+  }
+  @media (min-width: 640px) { .contact { padding-inline: 40px; } }
+  .contact h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+  .contact > p { max-width: 50ch; margin: 14px auto 0; color: #d9dcf5; }
+  .contact-list { display: grid; gap: 14px; margin-top: 32px; text-align: left; }
+  @media (min-width: 720px) { .contact-list { grid-template-columns: repeat(2, 1fr); } }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, .1);
+    border-radius: 14px;
+    transition: transform .2s var(--ease), background .2s;
+  }
+  a.contact-item:hover { transform: translateY(-3px); background: rgba(255, 255, 255, .18); }
+  a.contact-item:active { transform: scale(.98); }
+  .contact-item svg { flex: none; width: 24px; height: 24px; }
+  .contact-item div { min-width: 0; }
+  .contact-item small { display: block; color: #d9dcf5; font-size: .82rem; line-height: 1.3; }
+  .contact-item strong { display: block; font-weight: 700; overflow-wrap: anywhere; line-height: 1.35; }
+
+  footer { padding-block: 28px; color: var(--muted); font-size: .9rem; text-align: center; }
+
+  /* Apparition au défilement : le contenu n'est masqué que si JavaScript tourne */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
+    transition-delay: calc(var(--i, 0) * 100ms);
+  }
+  .js .reveal.seen { opacity: 1; transform: none; }
+  .js .reveal.settled { transition: transform .25s var(--ease), box-shadow .25s; transition-delay: 0s; }
+  .js .reveal.seen.settled.skill:hover { transform: translateY(-4px); }
+  .js .reveal.seen.settled.project:hover { transform: translateY(-7px) scale(1.012); }
+  .js .reveal.seen.settled.project:active { transform: scale(.985); }
+  .js .reveal.seen.settled.job:hover { transform: translateX(5px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .js .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body>
+<script>document.documentElement.classList.add("js");</script>
+
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-layout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M9.5 9.5V20"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.3 11h10.2l2-8H6.2"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="16.5" cy="19.5" r="1.4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h3.5l1.8 4.6-2.3 1.7a12 12 0 0 0 6.7 6.7l1.7-2.3L21 15.5V19a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3 5.2 2 2 0 0 1 5 3Z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6 7-11.5a7 7 0 1 0-14 0c0 5.500 7 11.500 7 11.500Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.500V17M8 7.200v.1M12 17v-6.500M12 13.500c0-1.800 1.300-3 3-3s2.500 1.200 2.500 3V17"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo gradient-text" href="#top">Hassen Rajhi</a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#about" data-en="About">À propos</a>
+      <a href="#skills" data-en="Skills">Compétences</a>
+      <a href="#projects" data-en="Projects">Réalisations</a>
+      <a href="#videos" data-en="Videos">Vidéos</a>
+      <a href="#experience" data-en="Experience">Parcours</a>
+      <a href="#contact" data-en="Contact">Contact</a>
+    </nav>
+    <button class="lang" id="lang" type="button" aria-label="Switch to English / Passer en français">EN</button>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu">
+    <div>
+      <a href="#about" data-en="About">À propos</a>
+      <a href="#skills" data-en="Skills">Compétences</a>
+      <a href="#projects" data-en="Projects">Réalisations</a>
+      <a href="#videos" data-en="Videos">Vidéos</a>
+      <a href="#experience" data-en="Experience">Parcours</a>
+      <a href="#contact" data-en="Contact">Contact</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <span class="blob a"></span><span class="blob b"></span><span class="blob c"></span>
+    <div class="wrap hero-grid">
+      <div class="portrait reveal" style="--i:1">
+        <img src="assets/hassen-rajhi.jpg" width="720" height="720" alt="Portrait de Hassen Rajhi">
+      </div>
+      <div>
+        <div class="badge reveal"><i></i><span data-en="Open to new opportunities">Ouvert à de nouvelles opportunités</span></div>
+        <h1 class="reveal" style="--i:1">
+          <span data-en="Hi, I'm">Bonjour, je suis</span>
+          <span class="gradient-text">Hassen Rajhi</span>
+        </h1>
+        <p class="role reveal" style="--i:2" data-en="Full Stack Web Developer & Quality Control Manager">Développeur Web Full Stack &amp; Responsable Contrôle Qualité</p>
+        <p class="lead reveal" style="--i:3" data-en="17 years building web applications, leading digital projects and supervising quality, with teams of more than 20 people.">17 ans à développer des applications web, à piloter des projets digitaux et à superviser la qualité, avec des équipes de plus de 20 personnes.</p>
+        <div class="actions reveal" style="--i:4">
+          <a class="btn primary" href="#projects" data-en="See my work">Voir mes réalisations</a>
+          <a class="btn ghost" href="#contact" data-en="Get in touch">Me contacter</a>
+        </div>
+        <div class="stats reveal" style="--i:5">
+          <div><b data-count="17" data-suffix="">17</b><span data-en="years of experience">ans d'expérience</span></div>
+          <div><b data-count="20" data-suffix="+">20+</b><span data-en="people managed">personnes encadrées</span></div>
+          <div><b data-count="9" data-suffix="">9</b><span data-en="years at Axecibles">ans chez Axecibles</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="reveal">
+        <p class="eyebrow" data-en="About">À propos</p>
+        <h2 class="section-title" data-en="From integration to team leadership">De l'intégration au pilotage d'équipe</h2>
+        <div class="text">
+          <p data-en="Full stack web developer with 17 years of professional experience in web integration, dynamic application development and digital project management.">Développeur Web Full Stack avec 17 ans d'expérience professionnelle en intégration web, développement d'applications dynamiques et pilotage de projets digitaux.</p>
+          <p data-en="I have led teams of more than 20 people, delivered quality web solutions and supervised quality control. I work with HTML5, CSS3, JavaScript, PHP, Symfony and a range of CMS platforms.">J'ai dirigé des équipes de plus de 20 personnes, livré des solutions web de qualité et supervisé le contrôle qualité. Je travaille avec HTML5, CSS3, JavaScript, PHP, Symfony et divers CMS.</p>
+          <p data-en="I'm looking for a dynamic team where I can actively contribute to digital transformation.">Je cherche une équipe dynamique pour contribuer activement à la transformation digitale.</p>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="card fact reveal" style="--i:1">
+          <h3 data-en="Education">Formation</h3>
+          <ul>
+            <li><strong data-en="Higher Technician Diploma in Business Computing">Diplôme de Technicien Supérieur en Informatique de Gestion</strong> ISET de Radès, 2008</li>
+            <li><strong data-en="Technical Baccalaureate">Baccalauréat Technique</strong> Lycée Secondaire Cité El Amal, Fouchana, 2005</li>
+          </ul>
+        </div>
+        <div class="card fact reveal" style="--i:2">
+          <h3 data-en="Certifications">Certifications</h3>
+          <ul>
+            <li><strong data-en="PHP5 / Symfony 2 Development">Développement PHP5 / Symfony 2</strong> Progrès Formation, 2015</li>
+            <li><strong>Manarate – TAM i3</strong> Manaret Hammamet, 2013</li>
+            <li><strong data-en="Performance Certification">Certification des Performances</strong> Axecibles, 2019</li>
+          </ul>
+        </div>
+        <div class="card fact reveal" style="--i:3">
+          <h3 data-en="Languages">Langues</h3>
+          <ul class="chips">
+            <li data-en="French: professional">Français : professionnel</li>
+            <li data-en="English: intermediate">Anglais : intermédiaire</li>
+            <li data-en="Arabic: native">Arabe : langue maternelle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow" data-en="Skills">Compétences</p>
+        <h2 class="section-title" data-en="My technical toolbox">Ma boîte à outils</h2>
+      </div>
+      <div class="skills">
+        <div class="card skill reveal">
+          <h3>Front-End</h3>
+          <ul class="chips"><li>HTML5</li><li>CSS3</li><li>JavaScript (ES6+)</li><li>jQuery</li><li>AJAX</li><li>Sass</li><li>Bootstrap</li><li data-en="Responsive design">Design responsive</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:1">
+          <h3>Back-End</h3>
+          <ul class="chips"><li>PHP</li><li>Symfony</li><li>MySQL</li><li>SQL</li><li>PDO</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:2">
+          <h3>CMS</h3>
+          <ul class="chips"><li>WordPress</li><li>Joomla</li><li>PrestaShop</li><li>CS-Cart</li></ul>
+        </div>
+        <div class="card skill reveal">
+          <h3 data-en="Design tools">Outils de design</h3>
+          <ul class="chips"><li>Photoshop</li><li>Illustrator</li><li>Figma</li><li>PSD</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:1">
+          <h3 data-en="DevOps & versioning">DevOps &amp; versionnement</h3>
+          <ul class="chips"><li>Git</li><li>GitHub</li><li>Docker</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:2">
+          <h3 data-en="Databases">Bases de données</h3>
+          <ul class="chips"><li>MySQL</li><li>SQL</li><li>Oracle 9i</li><li>Microsoft Access</li></ul>
+        </div>
+        <div class="card skill reveal">
+          <h3 data-en="Server environments">Environnements serveurs</h3>
+          <ul class="chips"><li>Apache</li><li>EasyPHP</li><li>XAMPP</li><li>WAMP</li><li>Linux/Unix</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:1">
+          <h3 data-en="Project management">Gestion de projet</h3>
+          <ul class="chips"><li data-en="Team management (20+)">Management d'équipe (20+)</li><li data-en="Quality control">Contrôle qualité</li><li>Jira</li></ul>
+        </div>
+        <div class="card skill reveal" style="--i:2">
+          <h3 data-en="Other">Autres</h3>
+          <ul class="chips"><li data-en="Email campaigns">Campagnes emailing</li><li data-en="Digital communication">Communication digitale</li><li data-en="Social media">Réseaux sociaux</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow" data-en="Projects">Réalisations</p>
+        <h2 class="section-title" data-en="Selected work">Réalisations sélectionnées</h2>
+      </div>
+      <div class="projects">
+        <a class="card project figma reveal" href="https://www.boulangerie-maison-martins.fr/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-layout"/></svg></div>
+          <div class="body">
+            <h3>Boulangerie Maison Martins</h3>
+            <p data-en="Figma/PSD design integrated into a responsive interface.">Intégration d'une maquette Figma/PSD en interface responsive.</p>
+            <ul class="chips"><li>Figma / PSD</li><li>Responsive</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+        <a class="card project figma reveal" style="--i:1" href="https://www.ap-commissaire-justice.fr/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-layout"/></svg></div>
+          <div class="body">
+            <h3>AP Commissaire Justice</h3>
+            <p data-en="Figma/PSD design integrated into a responsive interface.">Intégration d'une maquette Figma/PSD en interface responsive.</p>
+            <ul class="chips"><li>Figma / PSD</li><li>Responsive</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+        <a class="card project figma reveal" style="--i:2" href="https://www.al-renovations.fr/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-layout"/></svg></div>
+          <div class="body">
+            <h3>AL Rénovations</h3>
+            <p data-en="Figma/PSD design integrated into a responsive interface.">Intégration d'une maquette Figma/PSD en interface responsive.</p>
+            <ul class="chips"><li>Figma / PSD</li><li>Responsive</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+        <a class="card project symfony reveal" href="http://moninfirmier.tn/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-code"/></svg></div>
+          <div class="body">
+            <h3 data-en="Nursing services app">Application services infirmiers</h3>
+            <p data-en="Symfony web application for nursing services.">Application web Symfony dédiée aux services infirmiers.</p>
+            <ul class="chips"><li>Symfony</li><li>PHP</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+        <a class="card project symfony reveal" style="--i:1" href="https://www.app-gym.com/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-code"/></svg></div>
+          <div class="body">
+            <h3 data-en="Gym management app">Application gestion salle de sport</h3>
+            <p data-en="Symfony web application for managing a gym.">Application web Symfony pour la gestion d'une salle de sport.</p>
+            <ul class="chips"><li>Symfony</li><li>PHP</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+        <a class="card project presta reveal" style="--i:2" href="https://www.jacaranda.com.tn/" target="_blank" rel="noopener">
+          <div class="art"><svg aria-hidden="true"><use href="#i-cart"/></svg></div>
+          <div class="body">
+            <h3>Jacaranda</h3>
+            <p data-en="E-commerce site built with PrestaShop.">Site e-commerce réalisé avec PrestaShop.</p>
+            <ul class="chips"><li>PrestaShop</li><li>E-commerce</li></ul>
+            <span class="more"><span data-en="Visit the site">Voir le site</span> <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow" data-en="Videos">Vidéos</p>
+        <h2 class="section-title" data-en="My LinkedIn videos">Mes vidéos LinkedIn</h2>
+      </div>
+      <div class="videos" id="video-list" hidden></div>
+      <p class="video-more" id="video-more" hidden>
+        <a href="https://www.linkedin.com/in/hassenrajhi/recent-activity/videos/" target="_blank" rel="noopener"><span data-en="All my videos on LinkedIn">Toutes mes vidéos sur LinkedIn</span> →</a>
+      </p>
+      <div class="card video-empty reveal" id="video-empty">
+        <span class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.500v13a1 1 0 0 0 1.500.86l11-6.500a1 1 0 0 0 0-1.720l-11-6.500A1 1 0 0 0 8 5.500Z"/></svg></span>
+        <p data-en="Watch my videos directly on my LinkedIn profile.">Retrouvez mes vidéos directement sur mon profil LinkedIn.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.linkedin.com/in/hassenrajhi/recent-activity/videos/" target="_blank" rel="noopener" data-en="Watch on LinkedIn">Voir sur LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow" data-en="Experience">Parcours</p>
+        <h2 class="section-title" data-en="Where I've worked">Expériences professionnelles</h2>
+      </div>
+      <div class="timeline">
+        <article class="card job reveal">
+          <time data-en="Dec. 2016 — Jan. 2026 · 9 yrs 1 mo">Déc. 2016 — Janv. 2026 · 9 ans et 1 mois</time>
+          <h3 data-en="Axecibles · French digital agency (Lille, France / Tunisia)">Axecibles · Agence digitale française (Lille, France / Tunisie)</h3>
+          <p class="title" data-en="Web Developer / Web Integrator / Agency Manager / Quality Control Manager">Développeur Web / Intégrateur Web / Responsable d'agence / Responsable Contrôle Qualité</p>
+          <ul>
+            <li data-en="Led a team of more than 20 developers and designers, defining robust web architectures and applying best practices.">Direction et management d'une équipe de plus de 20 développeurs et designers, définition d'architectures web robustes et application des bonnes pratiques.</li>
+            <li data-en="Converted Figma and PSD designs into responsive web interfaces (HTML5, CSS3, JavaScript).">Intégration et conversion de maquettes Figma &amp; PSD en interfaces web responsive (HTML5, CSS3, JavaScript).</li>
+            <li data-en="Developed dynamic web applications with PHP, MySQL, PDO and the Symfony framework.">Développement d'applications web dynamiques avec PHP, MySQL, PDO et le framework Symfony.</li>
+            <li data-en="Supervised quality control: checking for bugs and brand guideline compliance before delivery.">Supervision du contrôle qualité : vérification des bugs et conformité à la charte graphique avant livraison.</li>
+            <li data-en="Managed the Tunisian agency (administration and logistics).">Gestion de l'agence tunisienne (administration et logistique).</li>
+            <li data-en="On-site placement in Lille, France: PrestaShop CMS integration and advanced Sass training.">Stage en présentiel à Lille (France) : intégration CMS PrestaShop et formation avancée Sass.</li>
+            <li data-en="Version control, project management and deployment with GitHub and Docker.">Gestion de versions, pilotage de projets et déploiement via GitHub et Docker.</li>
+          </ul>
+        </article>
+        <article class="card job reveal">
+          <time data-en="Dec. 2015 — Nov. 2016 · 1 yr">Déc. 2015 — Nov. 2016 · 1 an</time>
+          <h3>Orsaf</h3>
+          <p class="title">Webmaster</p>
+          <ul>
+            <li data-en="Developed and integrated advertising banners (HTML, JavaScript, PHP, MySQL).">Développement et intégration de bannières publicitaires (HTML, JavaScript, PHP, MySQL).</li>
+            <li data-en="Planned and managed email campaigns.">Planification et gestion des campagnes d'emailing.</li>
+          </ul>
+        </article>
+        <article class="card job reveal">
+          <time data-en="July 2014 — Nov. 2015 · 1 yr 5 mo">Juil. 2014 — Nov. 2015 · 1 an 5 mois</time>
+          <h3>Alpha Studios</h3>
+          <p class="title" data-en="Web Integrator / Developer">Intégrateur / Développeur Web</p>
+          <ul>
+            <li data-en="Built and deployed websites with the Joomla and PrestaShop CMS.">Création et déploiement de sites web via les CMS Joomla et PrestaShop.</li>
+            <li data-en="Integrated PSD designs and installed and customised modules.">Intégration de maquettes PSD et installation/personnalisation de modules.</li>
+          </ul>
+        </article>
+        <article class="card job reveal">
+          <time data-en="May 2012 — June 2014 · 2 yrs 2 mo">Mai 2012 — Juin 2014 · 2 ans 2 mois</time>
+          <h3>MTS Agency</h3>
+          <p class="title" data-en="Web Integrator / Developer">Intégrateur / Développeur Web</p>
+          <ul>
+            <li data-en="Developed dynamic websites (HTML, CSS, PHP, MySQL).">Développement de sites web dynamiques (HTML, CSS, PHP, MySQL).</li>
+            <li data-en="Created and maintained websites with the Joomla and WordPress CMS.">Création et maintenance de sites web avec les CMS Joomla et WordPress.</li>
+          </ul>
+        </article>
+        <article class="card job reveal">
+          <time data-en="July 2008 — Mar. 2012 · 3 yrs 9 mo">Juil. 2008 — Mars 2012 · 3 ans 9 mois</time>
+          <h3>Bridge</h3>
+          <p class="title" data-en="Web Integrator / Developer">Intégrateur / Développeur Web</p>
+          <ul>
+            <li data-en="Integrated PSD designs and handled front-end and back-end web development.">Intégration de maquettes PSD et développement web front-end et back-end.</li>
+            <li data-en="Produced graphic materials, including advertising magazines (Photoshop, Illustrator).">Production de supports graphiques, dont des magazines publicitaires (Photoshop, Illustrator).</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact reveal">
+        <h2 data-en="Let's work together">Travaillons ensemble</h2>
+        <p data-en="A project or an opportunity? Contact me directly.">Un projet ou une opportunité ? Contactez-moi directement.</p>
+        <div class="contact-list">
+          <a class="contact-item" href="tel:+21658228427">
+            <svg aria-hidden="true"><use href="#i-phone"/></svg>
+            <div><small data-en="Phone">Téléphone</small><strong dir="ltr">+216 58 228 427</strong></div>
+          </a>
+          <a class="contact-item" href="mailto:hassenrajhi.dev@gmail.com">
+            <svg aria-hidden="true"><use href="#i-mail"/></svg>
+            <div><small>Email</small><strong>hassenrajhi.dev@gmail.com</strong></div>
+          </a>
+          <a class="contact-item" href="https://www.linkedin.com/in/hassenrajhi" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-linkedin"/></svg>
+            <div><small>LinkedIn</small><strong>linkedin.com/in/hassenrajhi</strong></div>
+          </a>
+          <div class="contact-item">
+            <svg aria-hidden="true"><use href="#i-pin"/></svg>
+            <div><small data-en="Location">Localisation</small><strong data-en="Ben Arous, Tunisia">Ben Arous, Tunisie</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year">2026</span> Hassen Rajhi</div>
+</footer>
+
+<script>
+  /* VIDÉOS
+     Ajoutez une ligne par vidéo, entre guillemets et séparée par une virgule :
+     - Post LinkedIn : sur le post, menu « ... » > « Intégrer ce post »,
+       puis copiez uniquement l'adresse src, par exemple
+       "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:1234567890"
+     - Fichier vidéo : placez-le dans assets, puis écrivez "assets/ma-video.mp4"
+     Tant que la liste est vide, la page affiche un bouton vers LinkedIn. */
+  const VIDEOS = [
+  ];
+
+  function renderVideos() {
+    if (!VIDEOS.length) return;
+    const list = document.getElementById("video-list");
+    VIDEOS.forEach((src, index) => {
+      const card = document.createElement("div");
+      card.className = "card video";
+      if (src.endsWith(".mp4")) {
+        const video = document.createElement("video");
+        video.src = src;
+        video.controls = true;
+        video.preload = "metadata";
+        card.classList.add("local");
+        card.append(video);
+      } else {
+        const frame = document.createElement("iframe");
+        frame.src = src;
+        frame.title = "Vidéo LinkedIn " + (index + 1);
+        frame.loading = "lazy";
+        frame.allowFullscreen = true;
+        card.append(frame);
+      }
+      list.append(card);
+    });
+    list.hidden = false;
+    document.getElementById("video-more").hidden = false;
+    document.getElementById("video-empty").hidden = true;
+  }
+  renderVideos();
+
+  // Langue : le français est la version par défaut
+  const langBtn = document.getElementById("lang");
+  const translated = [...document.querySelectorAll("[data-en]")];
+  translated.forEach(el => { el.dataset.fr = el.textContent; });
+
+  function setLang(lang) {
+    translated.forEach(el => { el.textContent = el.dataset[lang]; });
+    document.documentElement.lang = lang;
+    langBtn.textContent = lang === "fr" ? "EN" : "FR";
+    try { localStorage.setItem("lang", lang); } catch {}
+  }
+  langBtn.addEventListener("click", () => {
+    setLang(document.documentElement.lang === "fr" ? "en" : "fr");
+  });
+  try {
+    if (localStorage.getItem("lang") === "en") setLang("en");
+  } catch {}
+
+  // Menu mobile
+  const burger = document.getElementById("burger");
+  const menu = document.getElementById("mobile-menu");
+  function toggleMenu(open) {
+    menu.classList.toggle("open", open);
+    burger.setAttribute("aria-expanded", String(open));
+  }
+  burger.addEventListener("click", () => toggleMenu(!menu.classList.contains("open")));
+  menu.addEventListener("click", e => { if (e.target.closest("a")) toggleMenu(false); });
+
+  // Compteurs animés
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function runCounter(el) {
+    const target = Number(el.dataset.count);
+    const suffix = el.dataset.suffix || "";
+    const start = performance.now();
+    const duration = 1400;
+    (function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  // Apparition au défilement (une seule fois par élément)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      observer.unobserve(el);
+      el.classList.add("seen");
+      el.addEventListener("transitionend", () => el.classList.add("settled"), { once: true });
+      if (!reduceMotion) el.querySelectorAll("[data-count]").forEach(runCounter);
+    });
+  }, { rootMargin: "0px 0px -60px 0px" });
+
+  if (!reduceMotion) {
+    document.querySelectorAll("[data-count]").forEach(el => { el.textContent = "0" + (el.dataset.suffix || ""); });
+  }
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
